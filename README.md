@@ -14,7 +14,7 @@ Apk file is [here](https://github.com/wangdicoder/react-native-Gank/blob/master/
 
 ## How to run it
 
-1. git clone https://github.com/wangdicoder/react-native-Gank
+1. git clone https://github.com/aijason/react-native-Gank
 
 2. cd react-native-Gank
 
