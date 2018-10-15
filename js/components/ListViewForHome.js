@@ -68,7 +68,7 @@ class ListViewForHome extends Component{
         return(
             <View style={[styles.rowItem, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Icon name="ios-create-outline" color={subTitleColor}/>
+                    <Icon name="ios-create" color={subTitleColor}/>
                     <Text style={{fontSize: px2dp(10), color: subTitleColor}}> {rowData.who ? rowData.who : 'null'}</Text>
                 </View>
                 <Text style={[styles.rowContent, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>

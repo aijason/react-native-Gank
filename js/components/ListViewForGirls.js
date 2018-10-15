@@ -60,7 +60,7 @@ class ListViewForGirls extends Component{
                             <TouchableOpacity
                                 onPress={this._triggerModal.bind(this)}
                                 activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                <Icon name="ios-close-circle-outline" color="#fff" size={px2dp(30)}/>
+                                <Icon name="ios-close-circle" color="#fff" size={px2dp(30)}/>
                             </TouchableOpacity>
                         </View>
                     </View>

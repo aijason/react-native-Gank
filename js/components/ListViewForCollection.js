@@ -88,11 +88,11 @@ class ListViewForCollection extends Component{
                     <Text style={[styles.title, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>
                 </View>
                 <View style={styles.infoPart}>
-                    <Icon name="ios-pricetag-outline" color={subTitleColor}/>
+                    <Icon name="ios-pricetag" color={subTitleColor}/>
                     <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.type}</Text>
-                    <Icon name="ios-create-outline" color={subTitleColor}/>
+                    <Icon name="ios-create" color={subTitleColor}/>
                     <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.who ? rowData.who : 'null'}</Text>
-                    <Icon name="ios-time-outline" color={subTitleColor}/>
+                    <Icon name="ios-time" color={subTitleColor}/>
                     <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{this._handleCreateTime(rowData.publishedAt)}</Text>
                 </View>
             </View>
