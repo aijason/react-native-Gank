@@ -2,7 +2,7 @@
 
 A cross platform App which shows the data from [gank.io](http://gank.io)
 
-- react-native version: **0.38**
+- react-native version: **0.57.3**
 
 - redux architecture
 
