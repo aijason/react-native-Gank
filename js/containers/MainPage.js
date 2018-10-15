@@ -74,14 +74,14 @@ class BottomTabBar extends Component{
     componentWillMount(){
         const tabIconColor = this.props.tabIconColor;
         if(Platform.OS === 'ios') {
-            Icon.getImageSource('ios-home-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
-            Icon.getImageSource('ios-home-outline', 100, tabIconColor).then((source) => this.setState({homeSelected: source}));
-            Icon.getImageSource('ios-compass-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({compassNormal: source}));
-            Icon.getImageSource('ios-compass-outline', 100, tabIconColor).then((source) => this.setState({compassSelected: source}));
-            Icon.getImageSource('ios-list-box-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({moreNormal: source}));
-            Icon.getImageSource('ios-list-box-outline', 100, tabIconColor).then((source) => this.setState({moreSelected: source}));
-            Icon.getImageSource('ios-cube-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
-            Icon.getImageSource('ios-cube-outline', 100, tabIconColor).then((source) => this.setState({collectionSelected: source}));
+            Icon.getImageSource('ios-home', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
+            Icon.getImageSource('ios-home', 100, tabIconColor).then((source) => this.setState({homeSelected: source}));
+            Icon.getImageSource('ios-compass', 100, theme.tabButton.normalColor).then((source) => this.setState({compassNormal: source}));
+            Icon.getImageSource('ios-compass', 100, tabIconColor).then((source) => this.setState({compassSelected: source}));
+            Icon.getImageSource('ios-list-box', 100, theme.tabButton.normalColor).then((source) => this.setState({moreNormal: source}));
+            Icon.getImageSource('ios-list-box', 100, tabIconColor).then((source) => this.setState({moreSelected: source}));
+            Icon.getImageSource('ios-cube', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
+            Icon.getImageSource('ios-cube', 100, tabIconColor).then((source) => this.setState({collectionSelected: source}));
         }else if(Platform.OS === 'android'){
             Icon.getImageSource('md-home', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
             Icon.getImageSource('md-home', 100, tabIconColor).then((source) => this.setState({homeSelected: source}));

@@ -39,7 +39,7 @@ class RowItemWithSwitcher extends Component{
                 <View style={styles.rightCell}>
                     <View style={styles.cell}>
                         <Text style={[styles.title, {color: titleColor}]}>{title}</Text>
-                        <Switch value={switcherValue} onValueChange={onValueChange} onTintColor={mainThemeColor}/>
+                        <Switch value={switcherValue} onValueChange={onValueChange} trackColor={mainThemeColor}/>
                     </View>
                     { renderSegment ?
                         <View style={[styles.segmentLine, {backgroundColor: segmentColor}]}/>

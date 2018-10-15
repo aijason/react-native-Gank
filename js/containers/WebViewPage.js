@@ -27,9 +27,9 @@ class WebViewPage extends BackPageComponent{
             bottomInfoBarBottomValue: new Animated.Value(0),
             //toolbarTopValue: new Animated.Value(0)
         };
-        this.bottomIconNames = ['ios-arrow-back-outline',
-                                'ios-arrow-forward-outline',
-                                'ios-refresh-outline'
+        this.bottomIconNames = ['ios-arrow-back',
+                                'ios-arrow-forward',
+                                'ios-refresh'
                                 ];
         this.bottomIconSize = [px2dp(25),px2dp(25),px2dp(32)];
 
@@ -94,10 +94,10 @@ class WebViewPage extends BackPageComponent{
                     onRequestClose={this._btnOnPressCallback.bind(this, 9)}>
                     <View style={[styles.moreContentContainerBackground, {backgroundColor: 'rgba(0,0,0,0.1)'}]}>
                         <View style={[styles.moreContentContainer, {backgroundColor: this.props.rowItemBackgroundColor}]}>
-                            {this._renderModalItem(0, 'ios-paper-outline', '查看完整标题')}
-                            {this._renderModalItem(4, 'ios-clipboard-outline', '复制链接')}
-                            {this._renderModalItem(5, 'ios-open-outline', '在浏览器中打开')}
-                            {this._renderModalItem(6, 'ios-share-outline', '分享此内容')}
+                            {this._renderModalItem(0, 'ios-paper', '查看完整标题')}
+                            {this._renderModalItem(4, 'ios-clipboard', '复制链接')}
+                            {this._renderModalItem(5, 'ios-open', '在浏览器中打开')}
+                            {this._renderModalItem(6, 'md-share', '分享此内容')}
                             {this._renderModalItem(9, 'ios-close-circle-outline', '关闭')}
                         </View>
                     </View>
@@ -135,7 +135,7 @@ class WebViewPage extends BackPageComponent{
                             <TouchableOpacity
                                 onPress={this._btnOnPressCallback.bind(this, 8)}
                                 activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                <Icon name='ios-heart-outline' color="#32cd32" size={px2dp(25)}/>
+                                <Icon name='ios-heart-empty' color="#32cd32" size={px2dp(25)}/>
                             </TouchableOpacity>
                         }
                     </View>
