@@ -4,7 +4,8 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard, Modal, PanResponder, Animated, ToastAndroid} from 'react-native';
+import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking,
+    Clipboard, Modal, PanResponder, Animated, ProgressBarAndroid} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from '../components/BackPageComponent';
@@ -17,6 +18,7 @@ import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import PropTypes from 'prop-types';
+import MyWebView from '../utils/MyWebView'
 
 class WebViewPage extends BackPageComponent{
     constructor(props){
@@ -25,7 +27,8 @@ class WebViewPage extends BackPageComponent{
             didMount: false,
             showMoreContent: false,
             bottomInfoBarBottomValue: new Animated.Value(0),
-            //toolbarTopValue: new Animated.Value(0)
+            //toolbarTopValue: new Animated.Value(0),
+            progress: 0,
         };
         this.bottomIconNames = ['ios-arrow-back',
                                 'ios-arrow-forward',
@@ -76,13 +79,18 @@ class WebViewPage extends BackPageComponent{
             <View style={[styles.container, {backgroundColor: this.props.pageBackgroundColor}]}>
                 <View style={styles.contentContainer} {...this._panResponder.panHandlers}>
                     {this.state.didMount ?
-                        <WebView
+                        <MyWebView
                             ref={(ref)=>{this.webView = ref}}
                             style={[styles.webView, {backgroundColor: this.props.pageBackgroundColor}]}
                             source={{uri: rowData.url}}
                             renderLoading={this._renderLoading.bind(this)}
                             renderError={this._renderError.bind(this)}
                             startInLoadingState={true}
+                            onProgress={(progress) => {
+                                if (this.state.progress !== progress) {
+                                    this.setState({progress});
+                                }
+                            }}
                         />
                         :
                         null
@@ -156,9 +164,20 @@ class WebViewPage extends BackPageComponent{
 
     _renderLoading(){
         return(
-            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator color={this.props.tabIconColor} size="large"/>
-                <Text style={{marginTop: px2dp(10), color: this.props.tabIconColor}}>玩命加载中...</Text>
+            <View style={{flex: 1}}>
+                <View>
+                    <ProgressBarAndroid
+                        style={{width: '100%', height: 10}}
+                        color={"#2196F3"}
+                        indeterminate={false}
+                        progress={this.state.progress/100}
+                        styleAttr={'Horizontal'}
+                    />
+                </View>
+                <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                    <ActivityIndicator color={this.props.tabIconColor} size="large"/>
+                    <Text style={{marginTop: px2dp(10), color: this.props.tabIconColor}}>玩命加载中...</Text>
+                </View>
             </View>
         );
     }

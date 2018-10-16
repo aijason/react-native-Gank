@@ -101,14 +101,14 @@ const styles = StyleSheet.create({
         top: (theme.screenHeight-px2dp(420))/2,
         left: (theme.screenWidth-px2dp(250))/2,
         borderWidth: theme.segment.width,
-        borderColor: theme.segment.color
+        borderColor: theme.segment.color,
     },
     colorPanel: {
         width: px2dp(250),
         height: px2dp(411),
         position: 'absolute',
         top: (theme.screenHeight-px2dp(420))/2,
-        left: (theme.screenWidth-px2dp(250))/2
+        left: (theme.screenWidth-px2dp(250))/2,
     },
     colorBlock: {
         borderRadius: 5,
