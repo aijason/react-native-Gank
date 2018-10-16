@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ListView, Image, Platform, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, Image, Platform, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity, RefreshControl, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestRandomData';
@@ -25,7 +25,6 @@ class DiscoveryFragment extends Component{
         this.tabNames = [['Android','iOS','前端','App'],['休息视频','拓展资源','瞎推荐','福利']];
         this.tabIcon = [['logo-android','logo-apple','logo-chrome','ios-apps'],['ios-film','ios-book','ios-radio','ios-images']];
         this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)','rgb(249,89,58)'],['#9370db','#00ced1','#ffa500','lightpink']];
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
     componentDidMount(){
@@ -45,15 +44,15 @@ class DiscoveryFragment extends Component{
         return(
             <View style={[styles.container, {backgroundColor: this.props.pageBackgroundColor}]}>
                 <NavigationBar title="发现" />
-                <ListView
+                <FlatList
                     enableEmptySections={true}
-                    dataSource={this.ds.cloneWithRows(this.props.dataSource)}
-                    renderRow={this._renderRow.bind(this)}
-                    renderHeader={this._renderHeader.bind(this)}
-                    renderSeparator={this._renderSeparator.bind(this)}
-                    renderFooter={this._renderFooter.bind(this)}
-                    initialListSize={10}
-                    pageSize={10}
+                    data={this.props.dataSource}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={this._renderRow.bind(this)}
+                    ListHeaderComponent={this._renderHeader.bind(this)}
+                    ItemSeparatorComponent={this._renderSeparator.bind(this)}
+                    ListFooterComponent={this._renderFooter.bind(this)}
+                    initialNumToRender={10}
                     onEndReached={this._onEndReached.bind(this)}
                     onEndReachedThreshold={5}
                     refreshControl={
@@ -123,24 +122,24 @@ class DiscoveryFragment extends Component{
         );
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow){
+    _renderRow({item,index}){
         if(Platform.OS === 'android') {
             return(
                 <TouchableNativeFeedback
                     overflow="hidden"
-                    key={rowID}
-                    onPress={this._itemOnPress.bind(this, rowData)}>
-                    {this._renderRowContent(rowData)}
+                    key={index}
+                    onPress={this._itemOnPress.bind(this, item)}>
+                    {this._renderRowContent(item)}
                 </TouchableNativeFeedback>
             );
         }else if(Platform.OS === 'ios'){
             return(
                 <TouchableHighlight
                     overflow="hidden"
-                    key={rowID}
-                    onPress={this._itemOnPress.bind(this, rowData)}
+                    key={index}
+                    onPress={this._itemOnPress.bind(this, item)}
                     underlayColor={theme.touchableHighlightUnderlayColor}>
-                    {this._renderRowContent(rowData)}
+                    {this._renderRowContent(item)}
                 </TouchableHighlight>
             );
         }
@@ -174,9 +173,9 @@ class DiscoveryFragment extends Component{
         );
     }
 
-    _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+    _renderSeparator(){
         return(
-            <View key={rowID} style={{height: theme.segment.width, width: theme.screenWidth, flexDirection: 'row'}}>
+            <View style={{height: theme.segment.width, width: theme.screenWidth, flexDirection: 'row'}}>
                 <View style={{flex: 77, backgroundColor: this.props.segmentColor}}/>
                 <View style={{flex: 23, backgroundColor: this.props.rowItemBackgroundColor}}/>
             </View>

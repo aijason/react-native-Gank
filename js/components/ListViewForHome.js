@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, FlatList, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
 import {connect} from 'react-redux';
 import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
@@ -21,7 +21,6 @@ class ListViewForHome extends Component{
 
     constructor(props){
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.tabIcon = ['logo-android','logo-apple','logo-chrome','ios-film','ios-book','ios-apps','ios-radio'];
         this.tabColor = ['rgb(141,192,89)','#000','rgb(51,154,237)', '#9370db','#00ced1','rgb(249,89,58)','#ffa500'];
     }
@@ -29,35 +28,35 @@ class ListViewForHome extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <ListView
+                <FlatList
                     enableEmptySections={true}
-                    dataSource={this.ds.cloneWithRows(this.props.dataSource)}
-                    renderRow={this._renderRow.bind(this)}
-                    renderHeader={this._renderHeader.bind(this)}
-                    //renderSeparator={this._renderSeparator.bind(this)}
+                    keyExtractor={(item, index) => index.toString()}
+                    data={this.props.dataSource}
+                    renderItem={this._renderRow.bind(this)}
+                    ListHeaderComponent={this._renderHeader.bind(this)}
                 />
             </View>
         );
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow){
+    _renderRow({item,index}){
         if(Platform.OS === 'android') {
             return(
                 <TouchableNativeFeedback
                     overflow="hidden"
-                    key={rowID}
-                    onPress={this._itemOnPress.bind(this, rowData)}>
-                    {this._renderRowContent(rowData)}
+                    key={index}
+                    onPress={this._itemOnPress.bind(this, item)}>
+                    {this._renderRowContent(item)}
                 </TouchableNativeFeedback>
             );
         }else if(Platform.OS === 'ios'){
             return(
                 <TouchableHighlight
                     overflow="hidden"
-                    key={rowID}
-                    onPress={this._itemOnPress.bind(this, rowData)}
+                    key={index}
+                    onPress={this._itemOnPress.bind(this, item)}
                     underlayColor={theme.touchableHighlightUnderlayColor}>
-                    {this._renderRowContent(rowData)}
+                    {this._renderRowContent(item)}
                 </TouchableHighlight>
             );
         }
@@ -86,9 +85,9 @@ class ListViewForHome extends Component{
         );
     }
 
-    _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+    _renderSeparator(){
         return(
-            <View key={rowID} style={{backgroundColor: theme.segment.color, height: theme.segment.width}}/>
+            <View style={{backgroundColor: theme.segment.color, height: theme.segment.width}}/>
         );
     }
 

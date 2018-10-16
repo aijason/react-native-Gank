@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, TouchableNativeFeedback, TouchableHighlight, ToastAndroid} from 'react-native';
+import {StyleSheet, View, Text, Image, Platform, FlatList, TouchableNativeFeedback, TouchableHighlight, ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import theme from '../constants/theme';
@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 class ListViewWithInfo extends Component{
     constructor(props){
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
     static propTypes = {
@@ -29,13 +28,13 @@ class ListViewWithInfo extends Component{
 
     render(){
         return(
-            <ListView
-                dataSource={this.ds.cloneWithRows(this.props.dataSource)}
-                renderRow={this._renderRow.bind(this)}
-                renderSeparator={this._renderSeparator.bind(this)}
-                renderFooter={this._renderFooter.bind(this)}
-                initialListSize={10}
-                pageSize={10}
+            <FlatList
+                data={this.props.dataSource}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={this._renderRow.bind(this)}
+                ItemSeparatorComponent={this._renderSeparator.bind(this)}
+                ListFooterComponent={this._renderFooter.bind(this)}
+                initialNumToRender={10}
                 onEndReached={this.props.onEndReached}
                 onEndReachedThreshold={5}
             />
@@ -49,24 +48,24 @@ class ListViewWithInfo extends Component{
         );
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow){
+    _renderRow({item,index}){
         if(Platform.OS === 'android') {
             return(
                 <TouchableNativeFeedback
                     overflow="hidden"
-                    key={rowID}
-                    onPress={this._itemOnPress.bind(this, rowData)}>
-                    {this._renderRowContent(rowData)}
+                    key={index}
+                    onPress={this._itemOnPress.bind(this, item)}>
+                    {this._renderRowContent(item)}
                 </TouchableNativeFeedback>
             );
         }else if(Platform.OS === 'ios'){
             return(
                 <TouchableHighlight
                     overflow="hidden"
-                    key={rowID}
-                    onPress={this._itemOnPress.bind(this, rowData)}
+                    key={index}
+                    onPress={this._itemOnPress.bind(this, item)}
                     underlayColor={theme.touchableHighlightUnderlayColor}>
-                    {this._renderRowContent(rowData)}
+                    {this._renderRowContent(item)}
                 </TouchableHighlight>
             );
         }
@@ -100,9 +99,9 @@ class ListViewWithInfo extends Component{
         );
     }
 
-    _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+    _renderSeparator(){
         return(
-            <View key={rowID} style={{height: theme.segment.width, backgroundColor: this.props.segmentColor}}/>
+            <View tyle={{height: theme.segment.width, backgroundColor: this.props.segmentColor}}/>
         );
     }
 

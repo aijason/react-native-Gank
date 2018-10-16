@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestHomeData';
-import {StyleSheet, View, Text, ScrollView, Animated, Image, RefreshControl, ListView, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Animated, Image, RefreshControl} from 'react-native';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';

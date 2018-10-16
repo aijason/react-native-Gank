@@ -2,7 +2,7 @@
  * Created by wangdi on 7/12/16.
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, TouchableOpacity, Modal} from 'react-native';
+import {StyleSheet, View, Text, Image, ListView, FlatList, ActivityIndicator, TouchableOpacity, Modal} from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 class ListViewForGirls extends Component{
     constructor(props){
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             modalVisible: false,
             imageWidth: 0,
@@ -33,13 +32,13 @@ class ListViewForGirls extends Component{
     render(){
         return(
             <View>
-                <ListView
-                    dataSource={this.ds.cloneWithRows(this.props.dataSource)}
-                    renderRow={this._renderRow.bind(this)}
-                    renderFooter={this._renderFooter.bind(this)}
-                    renderSeparator={this._renderSeparator.bind(this)}
-                    initialListSize={10}
-                    pageSize={10}
+                <FlatList
+                    data={this.props.dataSource}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={this._renderRow.bind(this)}
+                    ListFooterComponent={this._renderFooter.bind(this)}
+                    ItemSeparatorComponent={this._renderSeparator.bind(this)}
+                    initialNumToRender={10}
                     onEndReached={this.props.onEndReached}
                     onEndReachedThreshold={5}
                 />
@@ -76,20 +75,20 @@ class ListViewForGirls extends Component{
         );
     }
 
-    _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+    _renderSeparator(){
         return(
-            <View key={rowID} style={{height: px2dp(6), backgroundColor: this.props.pageBackgroundColor}}/>
+            <View style={{height: px2dp(6), backgroundColor: this.props.pageBackgroundColor}}/>
         );
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow){
+    _renderRow({item,index}){
         return(
             <View
                 style={styles.rowItem}
                 overflow="hidden"
-                key={rowID}>
-                {this._renderRowContent(rowData, true)}
-                {this._renderRowContent(rowData, false)}
+                key={index}>
+                {this._renderRowContent(item, true)}
+                {this._renderRowContent(item, false)}
             </View>
         );
     }
