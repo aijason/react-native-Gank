@@ -472,7 +472,7 @@ class WebView extends React.Component {
     };
 }
 
-const RCTWebView = requireNativeComponent('RCTWebViewProgress');
+const RCTWebView = requireNativeComponent('RCTWebView1');
 
 const styles = StyleSheet.create({
     container: {
